@@ -1,56 +1,37 @@
 """
 Climbing the Leaderboard
 
-The leaderboard of an arcade game is represented as a descending array of ints and ech
-player's game scores are represented by an ascending array of ints. For example,
+The leaderboard of an arcade game is represented as an array of ints, sorted in descending order,
+as are a player's scores. For example,
 
 Leaderboard: [100, 90, 90, 80]
-Player: [70, 80, 105]
+Player: [105, 80, 70]
 
-Our task is to write a function that takes the above two arrays as input and returns an
-array listing the rank of each of the player's scores.
+Write a function that takes the above two arrays as input and returns an array listing the ranks of
+each of the player's scores.
 
-For example, the above leaderboard has rankings [1, 2, 2, 3] and the player's rankings after each
-game are [4, 3, 1].
+Repeated entries on the leaderboard are given equal rank, so in our above example we have
+
+Leaderboard ranks: [1, 2, 2, 3]
+Player ranks: [1, 3, 4]
 """
 
 from collections import namedtuple
-from typing import Any
 
 import pytest
 
 
 def get_rankings(leaderboard: list[int], scores: list[int]) -> list[int]:
-    """Compute the rank of each player score relative to a fixed leaderboard."""
-    leaderboard = unique(leaderboard)
-    idx = len(leaderboard) - 1
+    """Compute the rank of each score (desc) relative to a fixed leaderboard (desc)."""
+    idx, skipped = 0, 0
     ranks = []
-
     for score in scores:
-        found = False
-        while not found:
-            if score > leaderboard[0]:
-                ranks.append(1)
-                found = True
-            elif score == leaderboard[idx]:
-                ranks.append(idx + 1)
-                found = True
-            elif score < leaderboard[idx]:
-                ranks.append(idx + 2)
-                found = True
-            else:
-                idx -= 1
+        while idx < len(leaderboard) and score < leaderboard[idx]:
+            if idx > 0 and leaderboard[idx] == leaderboard[idx - 1]:
+                skipped += 1
+            idx += 1
+        ranks.append(idx - skipped + 1)
     return ranks
-
-
-def unique(lst: list[Any]) -> list[Any]:
-    """Construct a new list without duplicates."""
-    seen, res = set(), []
-    for el in lst:
-        if el not in seen:
-            res.append(el)
-            seen.add(el)
-    return res
 
 
 class TestRankings:
@@ -59,9 +40,9 @@ class TestRankings:
     Example = namedtuple("Example", ["leaderboard", "scores", "expected"])
 
     examples = [
-        Example([100, 100, 50, 40, 40, 20, 10], [5, 25, 50, 120], [6, 4, 2, 1]),
-        Example([100, 90, 90, 80, 75, 60], [50, 65, 77, 90, 102], [6, 5, 4, 2, 1]),
-        Example([100, 90, 90, 80], [70, 80, 105], [4, 3, 1]),
+        Example([100, 100, 50, 40, 40, 20, 10], [120, 50, 25, 5], [1, 2, 4, 6]),
+        Example([100, 90, 90, 80, 75, 60], [102, 90, 77, 65, 50], [1, 2, 4, 5, 6]),
+        Example([100, 90, 90, 80], [105, 80, 70], [1, 3, 4]),
     ]
 
     @pytest.mark.parametrize("example", examples)
