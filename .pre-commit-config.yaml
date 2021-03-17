@@ -22,4 +22,4 @@ repos:
     hooks:
       - id: black
         language_version: python3.9
-        args: [--line-length=99]
+        args: [--diff, --line-length=99]
