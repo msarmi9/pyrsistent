@@ -12,10 +12,10 @@ repos:
         args: [--markdown-linebreak-ext=md]
 
   - repo: https://github.com/pycqa/flake8
-    rev: 3.8.0
+    rev: 3.7.0
     hooks:
       - id: flake8
-        args: [--max-line-length=99, --statistics]
+        args: [--select=E9,F63,F4,F7,F82,F84, --max-line-length=99, --statistics]
 
   - repo: https://github.com/psf/black
     rev: 20.8b1
