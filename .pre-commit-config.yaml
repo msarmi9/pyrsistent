@@ -15,7 +15,7 @@ repos:
     rev: 3.7.0
     hooks:
       - id: flake8
-        args: [--select=E9,F4,F7,F63,F82,F84,F401, --max-line-length=99, --statistics]
+        args: [--max-line-length=99, --statistics]
 
   - repo: https://github.com/psf/black
     rev: 20.8b1
