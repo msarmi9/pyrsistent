@@ -16,7 +16,7 @@ import pytest
 def is_longest_subarray(A: list[int], B: list[int], C: list[int]) -> bool:
     """Determine if B is a longest contiguous subarray of A composed of elements of C."""
     C = set(C)
-    if any(b not in C for b in B):
+    if len(B) > len(A) or any(b not in C for b in B):
         return False
 
     found_B = False
