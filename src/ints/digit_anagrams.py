@@ -8,6 +8,7 @@ rearranging its digits.
 For example, 827 and 278 are digit anagrams but 550 and 500 are not.
 """
 
+from collections import defaultdict
 from collections import namedtuple
 
 import pytest
@@ -15,11 +16,11 @@ import pytest
 
 def count_anagrams(nums: list[int]) -> int:
     """Return the number of pairs of digit anagrams in `nums`."""
-    total, ana2count = 0, {}
+    total, ana2count = 0, defaultdict(int)
     for num in nums:
         freqs = tuple(encode(num))
-        total += ana2count.get(freqs, 0)
-        ana2count[freqs] = ana2count.setdefault(freqs, 0) + 1
+        total += ana2count[freqs]
+        ana2count[freqs] += 1
     return total
 
 
