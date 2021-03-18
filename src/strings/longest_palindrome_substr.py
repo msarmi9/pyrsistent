@@ -5,7 +5,6 @@ Given a string, return its lexicographically smallest longest palindromic substr
 """
 
 from collections import namedtuple
-from typing import Optional
 
 import pytest
 
