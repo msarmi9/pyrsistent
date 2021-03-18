@@ -13,17 +13,19 @@ def longest_palindromic_substr(s: str) -> str:
     """Return the lexicographically smallest longest palindromic substring."""
     longest = ""
     for center in range(len(s)):
-        for offset in (0, 1):
-            substr = expand_palindrome(s, center, center + offset)
-            if len(substr) > len(longest):
-                longest = substr
-            elif len(substr) == len(longest):
-                longest = min(substr, longest)
+        for odd in (True, False):
+            pal = expanded_palindrome(s, center, odd=odd)
+            if len(pal) > len(longest):
+                longest = pal
+            elif len(pal) == len(longest):
+                longest = min(pal, longest)
     return longest
 
 
-def expand_palindrome(s: str, l: int, r: bool) -> str:
-    """Return the longest palindrome centered at the substring s[l:r]."""
+def expanded_palindrome(s: str, center: int, odd: bool) -> str:
+    """Return the longest odd or even length palindrome centered at a given index."""
+    l = center - 1
+    r = center + 1 if odd else center
     while 0 <= l and r < len(s) and s[l] == s[r]:
         l -= 1
         r += 1
