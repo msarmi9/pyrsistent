@@ -14,7 +14,7 @@ def longest_palindromic_substr(s: str) -> str:
     longest = ""
     for center in range(len(s)):
         for offset in (0, 1):
-            substr = is_palindrome(s, center, center + offset)
+            substr = expand_palindrome(s, center, center + offset)
             if len(substr) > len(longest):
                 longest = substr
             elif len(substr) == len(longest):
@@ -22,7 +22,7 @@ def longest_palindromic_substr(s: str) -> str:
     return longest
 
 
-def is_palindrome(s: str, l: int, r: bool) -> str:
+def expand_palindrome(s: str, l: int, r: bool) -> str:
     """Return the longest palindrome centered at the substring s[l:r]."""
     while 0 <= l and r < len(s) and s[l] == s[r]:
         l -= 1
