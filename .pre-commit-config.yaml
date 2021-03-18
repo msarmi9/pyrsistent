@@ -16,10 +16,3 @@ repos:
     hooks:
       - id: flake8
         args: [--extend-ignore=E741, --max-line-length=99, --statistics]
-
-  - repo: https://github.com/psf/black
-    rev: 20.8b1
-    hooks:
-      - id: black
-        language_version: python3.9
-        args: [--diff, --line-length=99]
