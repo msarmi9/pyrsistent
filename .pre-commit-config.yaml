@@ -15,4 +15,4 @@ repos:
     rev: 3.7.0
     hooks:
       - id: flake8
-        args: [--extend-ignore=E741, --max-line-length=99, --statistics]
+        args: [--extend-ignore=E701,E741, --max-line-length=99, --statistics]
