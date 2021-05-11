@@ -31,20 +31,20 @@ def sort_by_frequency(M: Matrix) -> Matrix:
     n = len(M)
     els = sort_elements(M)
     out = [[0] * n for _ in range(n)]
-    for k, (i, j) in enumerate(diagonal_ixs(n, anti=True)):
+    for k, (i, j) in enumerate(antidiagonal_ixs(n, reverse=True)):
         out[i][j] = els[k]
     return out
 
 
-def diagonal_ixs(n: int, anti=False):
-    """Generate the coordinates (i, j) of the diagonals of an n x n matrix."""
+def antidiagonal_ixs(n: int, reverse=False):
+    """Generate the coordinates (i, j) of the anti-diagonals of an n x n matrix from L to R."""
     n_diags = 2*n - 1
-    diags = range(n_diags - 1, -1, -1) if anti else range(n_diags)
+    diags = range(n_diags - 1, -1, -1) if reverse else range(n_diags)
     for d in diags:
         for k in range(d + 1):
             l = d - k
             if k < n and l < n:
-                yield (l, k) if anti else (k, l)
+                yield (l, k) if reverse else (k, l)
 
 
 def sort_elements(M: Matrix, reverse=False) -> list[int]:
